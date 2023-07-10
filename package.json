@@ -1,0 +1,29 @@
+{
+  "name": "@idkncc/forward-port",
+  "version": "1.0.0",
+  "license": "MIT",
+
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Mon4ik/forward-port.git"
+  },
+
+  "main": "index.js",
+  "bin": {
+    "forward-port": "bin/index.js"
+  },
+
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./bin"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.1",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "chalk": "4.1.2",
+    "commander": "^11.0.0",
+    "consola": "^3.2.3"
+  }
+}

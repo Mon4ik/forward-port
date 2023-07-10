@@ -1,0 +1,16 @@
+# js
+node_modules
+bin
+
+# other
+*.logs
+.env
+
+# jetbrains
+.idea
+
+# os
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
