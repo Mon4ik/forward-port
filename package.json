@@ -1,6 +1,6 @@
 {
   "name": "@idkncc/forward-port",
-  "version": "1.0.0-ci2",
+  "version": "1.0.1",
   "license": "MIT",
 
   "repository": {
@@ -8,9 +8,8 @@
     "url": "git://github.com/Mon4ik/forward-port.git"
   },
 
-  "main": "index.js",
   "bin": {
-    "forward-port": "bin/index.js"
+    "forward-port": "./bin/index.js"
   },
 
   "scripts": {
