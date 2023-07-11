@@ -31,5 +31,19 @@ forward-port gen-key [length]
 forward-port server <preshared-key> [-p <other-port>]
 
 # Create ForwardPort Client
-forward-port server <local-port> <fp-server> <preshared-key> [-p <other-port>]
+forward-port client <local-port> <fp-server> <preshared-key> [-p <other-port>] [--debug]
 ```
+
+## Example (Minecraft Server)
+- On your server (with white IP, **f.e. VDS**)
+  ```shell
+  npx @idkncc/forward-port server SUPER_SECRET_KEY
+  # f.e. Server runs on IP 5.5.5.5
+  ```
+- On your PC
+  ```shell
+  #                      minecraft port   vds
+  #                                v       v
+  npx @idkncc/forward-port client 25565 5.5.5.5 SUPER_SECRET_KEY
+  ```
+- Your friend: Uses **5.5.5.5:1337** to connect

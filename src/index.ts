@@ -24,17 +24,19 @@ app.command("client")
     .argument("host", "Server's IP")
     .argument("key", "Pre-shared key")
     .option("-p, --port <port>", "Port to server", "1337")
+    .option("--debug", "Debug mode")
     .action((portForward, host, key, opt) => {
-        client.bootstrap(parseInt(portForward), host, key, parseInt(opt.port))
+        client.bootstrap(parseInt(portForward), host, key, parseInt(opt.port), opt.debug)
     })
 
 app.command("server")
     .description("Server Mode")
     .argument("key", "Pre-shared key")
     .option("-p, --port <port>", "Port for server", "1337")
-//  .option("--encryption", "Add additional encryption")
+    .option("--debug", "Debug mode")
+    //.option("--encryption", "Add additional encryption")
     .action((key, opt) => {
-        server.bootstrap(key, parseInt(opt.port))
+        server.bootstrap(key, parseInt(opt.port), opt.debug)
     })
 
 app.command("gen-key")

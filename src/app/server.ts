@@ -7,7 +7,7 @@ import chalk from "chalk";
 import {sha256, PacketType, Packet, mapGetKey} from "./utils";
 
 
-export function bootstrap(key: string, port: number) {
+export function bootstrap(key: string, port: number, debug: boolean) {
     const server = createServer()
     let clientConnected = false
     let client: Socket = null
@@ -58,6 +58,7 @@ export function bootstrap(key: string, port: number) {
                 tryInitClient(packet)
                 return
             }
+            if (client === sock) return;
 
             // else
             client.write(Buffer.concat([

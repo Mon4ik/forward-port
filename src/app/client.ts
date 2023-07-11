@@ -1,14 +1,12 @@
 import {connect, Socket} from "net"
 import struct from "./struct"
-import {Packet, PacketType, sha256} from "./utils";
+import {chunk, mapGetKey, Packet, PacketType, sha256} from "./utils";
 import {consola} from "consola";
 import chalk from "chalk";
 
-export function bootstrap(portForward: number, host: string, key: string, port: number) {
+export function bootstrap(portForward: number, host: string, key: string, port: number, debug: boolean) {
     const client = new Socket()
     const socks = new Map<number, Socket>()
-
-    consola.log("SCHEMA: RS > C > LS")
 
     client.connect(port, host)
     consola.start("Connecting to ForwardPort Server...")
@@ -26,11 +24,14 @@ export function bootstrap(portForward: number, host: string, key: string, port: 
     client.on("data", (pack) => {
         const packet = new Packet(pack)
 
-        if (process.env.NODE_ENV !== "production") {
+        if (debug) {
+            const buffer_chunked = chunk(pack.toString('hex'), 2)
             consola.log(chalk.bgCyan.bold`  FP > C  `)
-            consola.log(`  TYPE   : ${packet.type}`)
-            consola.log(`  SOCKID : ${packet.socketId}`)
-            consola.log(`  PACKET : ${packet.innerPacket}`)
+            consola.log(`  BUFFER     : ${chalk.bold.bgRed(buffer_chunked.slice(0, 2).join(" "))} ${chalk.bold.bgBlackBright(buffer_chunked.slice(3).join(" "))}`)
+            consola.log(`  ${chalk.underline`   PARSED   `}`)
+            consola.log(`  TYPE       : ${chalk.bold(packet.type)}`)
+            consola.log(`  SOCKID     : ${chalk.bold(packet.socketId)}`)
+            consola.log(`  PACKET     : ${chalk.bold(packet.innerPacket)}`)
         }
 
         switch (packet.type) {
@@ -53,7 +54,7 @@ export function bootstrap(portForward: number, host: string, key: string, port: 
 
                 sock.on("data", (packet) => {
                     client.write(Buffer.concat([
-                        Buffer.from([PacketType.SocketPacket]),
+                        Buffer.from([PacketType.SocketPacket, mapGetKey(socks, sock)]),
                         packet
                     ]))
                 })
