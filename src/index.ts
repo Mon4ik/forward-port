@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import {Command} from "commander";
 
 import * as server from "./app/server"
@@ -10,7 +12,7 @@ import {consola} from "consola";
 import chalk from "chalk";
 
 const app = new Command()
-const packageJSON = existsSync(join(__dirname, "package.json")) ? require(join(__dirname, "package.json")) : require(join(__dirname, "../package.json"))
+const packageJSON = require("../package.json")
 
 app.name("forward-port")
     .description("Your local port forwarding")
@@ -36,6 +38,7 @@ app.command("server")
     })
 
 app.command("gen-key")
+    .description("Generate Pre-Shared Key")
     .argument("[length]", "Length of key", (i) => parseInt(i, 10), 40)
     .action((len: number) => {
         consola.success(`Generated pre-shared key: ${chalk.bold.underline(randomBytes(len / 2).toString("hex"))}`)
