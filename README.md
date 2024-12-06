@@ -1,3 +1,6 @@
+# deprecated
+just use SSH lol
+
 # Forward Port
 Your local port forwarding
 
